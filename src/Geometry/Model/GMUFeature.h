@@ -37,6 +37,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, nullable, readwrite) NSDictionary<NSString *, NSObject *> *customProperties;
 
 /**
+ * The properties of the geometry in the feature.
+ */
+@property(nonatomic, nullable, readonly) NSDictionary<NSString *, NSString *> *properties;
+
+/**
  * The bounding box of the geometry in the feature.
  */
 @property(nonatomic, nullable, readonly) GMSCoordinateBounds *boundingBox;
