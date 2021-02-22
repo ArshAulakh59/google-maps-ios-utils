@@ -31,6 +31,20 @@
     _properties = properties ?: [[[NSDictionary alloc] init] copy];
   }
   return self;
+
+- (instancetype)initWithGeometry:(id<GMUGeometry>)geometry
+                      identifier:(NSString * _Nullable)identifier
+                customProperties:(NSDictionary<NSString *, NSObject *> * _Nullable)customProperties
+                      properties:(NSDictionary<NSString *, NSString *> * _Nullable)properties
+                     boundingBox:(GMSCoordinateBounds * _Nullable)boundingBox {
+    if (self = [super init]) {
+        _geometry = geometry;
+        _identifier = identifier;
+        _customProperties = customProperties ?: [[[NSDictionary alloc] init] copy];
+        _boundingBox = boundingBox;
+        _properties = properties ?: [[[NSDictionary alloc] init] copy];
+    }
+    return self;
 }
 
 @end
