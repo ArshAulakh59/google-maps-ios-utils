@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -137,11 +137,11 @@
 		AABFFE93245787640015D8C6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AABFFE92245787640015D8C6 /* CoreLocation.framework */; };
 		AABFFE952457876B0015D8C6 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AABFFE942457876B0015D8C6 /* CoreTelephony.framework */; };
 		AABFFE972457876F0015D8C6 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AABFFE962457876F0015D8C6 /* CoreText.framework */; };
-		AABFFE98245787760015D8C6 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AADB9A3E245780AA000C86E1 /* GLKit.framework */; };
+		AABFFE98245787760015D8C6 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AADB9A3E245780AA000C86E1 /* GLKit.framework */; platformFilter = ios; };
 		AABFFE9A2457877C0015D8C6 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AABFFE992457877C0015D8C6 /* ImageIO.framework */; };
 		AABFFE9C245787840015D8C6 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AABFFE9B245787840015D8C6 /* libc++.tbd */; };
 		AABFFE9E2457878A0015D8C6 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AABFFE9D2457878A0015D8C6 /* libz.tbd */; };
-		AABFFE9F245787900015D8C6 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AADB9A46245780C8000C86E1 /* OpenGLES.framework */; };
+		AABFFE9F245787900015D8C6 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AADB9A46245780C8000C86E1 /* OpenGLES.framework */; platformFilter = ios; };
 		AABFFEA1245787950015D8C6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AABFFEA0245787950015D8C6 /* QuartzCore.framework */; };
 		AABFFEA32457879D0015D8C6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AABFFEA22457879D0015D8C6 /* SystemConfiguration.framework */; };
 		AABFFEA4245787A20015D8C6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AADB9A4C245780DA000C86E1 /* UIKit.framework */; };
@@ -226,6 +226,9 @@
 		AAE6BA6B2458CD510051CD31 /* GMUTestClusterItem.h in Headers */ = {isa = PBXBuildFile; fileRef = AAE6BA272458C9EB0051CD31 /* GMUTestClusterItem.h */; };
 		AAE6BA6C245929610051CD31 /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAE6BA4E2458CBFE0051CD31 /* OCMock.framework */; };
 		AAE83A31245794B20064204E /* GMUClusterManager+Testing.h in Headers */ = {isa = PBXBuildFile; fileRef = AABFFEBC24578CAC0015D8C6 /* GMUClusterManager+Testing.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E9F995EC25E4E64F0078C1B0 /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9F995EB25E4E64F0078C1B0 /* OCMock.framework */; };
+		E9F995ED25E4E64F0078C1B0 /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9F995EB25E4E64F0078C1B0 /* OCMock.framework */; };
+		E9F995EE25E4E64F0078C1B0 /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9F995EB25E4E64F0078C1B0 /* OCMock.framework */; };
 		F849455F209C15CE00C60C05 /* GoogleMapsUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = F849455D209C15CE00C60C05 /* GoogleMapsUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -450,6 +453,7 @@
 		AAE6BA272458C9EB0051CD31 /* GMUTestClusterItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMUTestClusterItem.h; sourceTree = "<group>"; };
 		AAE6BA4E2458CBFE0051CD31 /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMock.framework; path = Carthage/Build/iOS/OCMock.framework; sourceTree = "<group>"; };
 		AAE6BA502458CC2F0051CD31 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		E9F995EB25E4E64F0078C1B0 /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMock.framework; path = Carthage/Build/iOS/OCMock.framework; sourceTree = "<group>"; };
 		F84944ED209BEBED00C60C05 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMaps.framework; path = Pods/GoogleMaps/Maps/Frameworks/GoogleMaps.framework; sourceTree = "<group>"; };
 		F849455B209C15CE00C60C05 /* GoogleMapsUtils.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GoogleMapsUtils.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F849455D209C15CE00C60C05 /* GoogleMapsUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GoogleMapsUtils.h; sourceTree = "<group>"; };
@@ -477,6 +481,7 @@
 				AADB9A3724578086000C86E1 /* CoreImage.framework in Frameworks */,
 				AADB9A352457807F000C86E1 /* CoreGraphics.framework in Frameworks */,
 				AA8DE322245793AB003DBA7B /* GoogleMapsBase.framework in Frameworks */,
+				E9F995EC25E4E64F0078C1B0 /* OCMock.framework in Frameworks */,
 				AADB9A3324578079000C86E1 /* CoreData.framework in Frameworks */,
 				AADB9A3124578070000C86E1 /* Accelerate.framework in Frameworks */,
 				AAE6BA6C245929610051CD31 /* OCMock.framework in Frameworks */,
@@ -491,6 +496,7 @@
 				AAE6BA672458CCDA0051CD31 /* GoogleMaps.framework in Frameworks */,
 				AAE6BA682458CCDA0051CD31 /* GoogleMapsBase.framework in Frameworks */,
 				AAE6BA692458CCDA0051CD31 /* GoogleMapsCore.framework in Frameworks */,
+				E9F995ED25E4E64F0078C1B0 /* OCMock.framework in Frameworks */,
 				AAB7CC9B24592D3400127E16 /* OCMock.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -504,6 +510,7 @@
 				AA8DE327245793BF003DBA7B /* GoogleMapsCore.framework in Frameworks */,
 				AABFFEA4245787A20015D8C6 /* UIKit.framework in Frameworks */,
 				AABFFEA32457879D0015D8C6 /* SystemConfiguration.framework in Frameworks */,
+				E9F995EE25E4E64F0078C1B0 /* OCMock.framework in Frameworks */,
 				AABFFEA1245787950015D8C6 /* QuartzCore.framework in Frameworks */,
 				AABFFE9F245787900015D8C6 /* OpenGLES.framework in Frameworks */,
 				AABFFE9E2457878A0015D8C6 /* libz.tbd in Frameworks */,
@@ -530,6 +537,7 @@
 				AA8DE321245793AB003DBA7B /* GoogleMaps.framework */,
 				AA8DE31F245793AA003DBA7B /* GoogleMapsBase.framework */,
 				AA8DE320245793AB003DBA7B /* GoogleMapsCore.framework */,
+				E9F995EB25E4E64F0078C1B0 /* OCMock.framework */,
 				0242D1B51C7C1A2100557130 /* App */,
 				0242D1881C7C19A500557130 /* Source */,
 				0242D2101C7E752B00557130 /* UnitTest */,
@@ -1575,7 +1583,10 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/app/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.gmsutils.DevApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1603,7 +1614,10 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/app/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1663,7 +1677,11 @@
 					"\"${SRCROOT}/../test\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
@@ -1694,7 +1712,11 @@
 					"\"${SRCROOT}/../test\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
@@ -1742,15 +1764,21 @@
 				INFOPLIST_FILE = GoogleMapsUtils/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 13.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+					/Carthage/Build/iOS,
+				);
 				MACH_O_TYPE = staticlib;
-				MARKETING_VERSION = 3.8.3;
+				MARKETING_VERSION = 3.8.4;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.gmsutils;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1794,15 +1822,21 @@
 				INFOPLIST_FILE = GoogleMapsUtils/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 13.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+					/Carthage/Build/iOS,
+				);
 				MACH_O_TYPE = staticlib;
-				MARKETING_VERSION = 3.8.3;
+				MARKETING_VERSION = 3.8.4;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.google.gmsutils;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
