@@ -51,11 +51,23 @@ NS_ASSUME_NONNULL_BEGIN
  * @param geometry The geometry object in the feature.
  * @param identifier The identifier of the feature.
  * @param properties The properties of the geometry in the feature.
+ */
+- (instancetype)initWithGeometry:(id<GMUGeometry>)geometry
+                      identifier:(NSString * _Nullable)identifier
+                      properties:(NSDictionary<NSString *, NSObject *> * _Nullable)properties;
+
+/**
+ *
+ * @param geometry The geometry object in the feature.
+ * @param identifier The identifier of the feature.
+ * @param properties The properties of the geometry in the feature.
  * @param boundingBox The bounding box of the geometry in the feature.
  */
 - (instancetype)initWithGeometry:(id<GMUGeometry>)geometry
                       identifier:(NSString * _Nullable)identifier
-                      properties:(NSDictionary<NSString *, NSObject *> * _Nullable)properties
+                      properties:(NSDictionary<NSString *, NSString *> * _Nullable)properties
+                     boundingBox:(GMSCoordinateBounds * _Nullable)boundingBox;
+
 /**
  *
  * @param geometry The geometry object in the feature.

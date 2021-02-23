@@ -17,15 +17,15 @@
 import PackageDescription
 
 let package = Package(
-  name: "GoogleMapsUtils",
-  products: [
-    .library(name: "GoogleMapsUtils", targets: ["GoogleMapsUtils"])
-  ],
-  targets: [
-    .binaryTarget(
-      name: "GoogleMapsUtils",
-      url: "https://github.com/googlemaps/google-maps-ios-utils/releases/download/v3.8.0/GoogleMapsUtils.xcframework.zip",
-      checksum: "fe55272f8773e39df76deb9f04afddf401b850f6ae6282a0bb66df68c5f3deb9"
-    )
-  ]
+    name: "GoogleMapsUtils",
+    products: [
+        .library(name: "GoogleMapsUtils", targets: ["GoogleMapsUtils"])
+    ],
+    targets: [
+        .binaryTarget(
+            name: "GoogleMapsUtils",
+            url: "https://github.com/googlemaps/google-maps-ios-utils/releases/download/v3.8.3/GoogleMapsUtils.xcframework.zip"
+            checksum: "b640ec5d7a82c6f48ac9446c26347f1e79297e86927d20a4808fb8f607de0fc1"
+        )
+    ]
 )

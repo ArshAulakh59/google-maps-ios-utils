@@ -31,6 +31,7 @@
     _properties = properties ?: [[[NSDictionary alloc] init] copy];
   }
   return self;
+}
 
 - (instancetype)initWithGeometry:(id<GMUGeometry>)geometry
                       identifier:(NSString * _Nullable)identifier
