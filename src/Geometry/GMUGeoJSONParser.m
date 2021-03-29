@@ -171,6 +171,17 @@ static NSString *const kGMUGeometryRegex =
   if ([feature objectForKey:kGMUGeometryMember]) {
     geometry = [self geometryFromDict:[feature objectForKey:kGMUGeometryMember]];
   }
+    if (!identifier) {
+        identifier = [properties valueForKey:kGMUIdMember];
+        
+        if (!identifier) {
+            identifier = [properties valueForKey:@"name"];
+        }
+        
+        if (!identifier) {
+            identifier = [properties valueForKey:@"Name"];
+        }
+    }
   if (_boundingBox) {
     boundingBox = _boundingBox;
   } else if ([feature objectForKey:kGMUBoundingBoxMember]) {
