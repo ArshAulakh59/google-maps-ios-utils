@@ -171,15 +171,35 @@ static NSString *const kGMUGeometryRegex =
   if ([feature objectForKey:kGMUGeometryMember]) {
     geometry = [self geometryFromDict:[feature objectForKey:kGMUGeometryMember]];
   }
+    if (!identifier) {
+        identifier = [properties valueForKey:kGMUIdMember];
+        
+        if (!identifier) {
+            identifier = [properties valueForKey:@"name"];
+        }
+        
+        if (!identifier) {
+            identifier = [properties valueForKey:@"Name"];
+        }
+    }
   if (_boundingBox) {
     boundingBox = _boundingBox;
   } else if ([feature objectForKey:kGMUBoundingBoxMember]) {
     boundingBox = [self boundingBoxFromCoordinates:[feature objectForKey:kGMUBoundingBoxMember]];
   }
-  return [[GMUFeature alloc] initWithGeometry:geometry
-                                   identifier:identifier
-                                   properties:properties
-                                  boundingBox:boundingBox];
+    
+    NSMutableDictionary *customProperties = [NSMutableDictionary new];
+    for (NSString *key in [properties allKeys]) {
+        if (![[properties objectForKey:key] isKindOfClass:[NSNull class]])
+            [customProperties setObject:[properties objectForKey:key] forKey:key];
+    }
+    [customProperties setValue: nil forKey: @"name"];
+    
+    return [[GMUFeature alloc] initWithGeometry:geometry
+                                     identifier:identifier
+                               customProperties:customProperties
+                                     properties:properties
+                                    boundingBox:boundingBox];
 }
 
 - (NSArray<GMUFeature *> *)featureCollectionFromDict:(NSDictionary *)features {

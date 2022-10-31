@@ -120,151 +120,161 @@ static NSString *const kStyleMapDefaultState = @"normal";
 }
 
 + (UIImage *)imageFromPath:(NSString *)path {
-  // URLWithString returns nil for a path formatted as a local file reference.
-  NSURL *url = [NSURL URLWithString:path];
-
-  NSData *data;
-  if (url) {
-    // Get the image data from an external file.
-    data = [NSData dataWithContentsOfURL:url];
-  } else {
-    // Get the image data from a local file.
-    data = [NSData dataWithContentsOfFile:path];
-  }
-  return [UIImage imageWithData:data];
+    // URLWithString returns nil for a path formatted as a local file reference.
+    NSURL *url = [NSURL URLWithString:path];
+    
+    NSData *data;
+    if (url) {
+        // Get the image data from an external file.
+        data = [NSData dataWithContentsOfURL:url];
+    } else {
+        // Get the image data from a local file.
+        data = [NSData dataWithContentsOfFile:path];
+    }
+    return [UIImage imageWithData:data];
 }
 
 - (GMUStyle *)getStyleFromStyleMaps:(NSString *)styleUrl {
-  GMUStyleMap *styleMap = [_styleMaps objectForKey:styleUrl];
-  if (styleMap) {
-      for (GMUPair *pair in styleMap.pairs) {
-          if ([pair.key isEqual:kStyleMapDefaultState]) {
-              return [_styles objectForKey:pair.styleUrl];
-          }
-      }
-  }
-  return nil;
+    GMUStyleMap *styleMap = [_styleMaps objectForKey:styleUrl];
+    if (styleMap) {
+        for (GMUPair *pair in styleMap.pairs) {
+            if ([pair.key isEqual:kStyleMapDefaultState]) {
+                return [_styles objectForKey:pair.styleUrl];
+            }
+        }
+    }
+    return nil;
 }
 
 - (void)renderGeometryContainers:(NSArray<id<GMUGeometryContainer>> *)containers {
-  for (id<GMUGeometryContainer> container in containers) {
-    GMUStyle *style = container.style;
-    if (!style && [container isKindOfClass:[GMUPlacemark class]]) {
-      GMUPlacemark *placemark = container;
-      style = [_styles objectForKey:placemark.styleUrl];
-      // If not found, look it up in one of the StyleMaps
-      style = style ?: [self getStyleFromStyleMaps:placemark.styleUrl];
+    for (id<GMUGeometryContainer> container in containers) {
+        GMUStyle *style = container.style;
+        if (!style && [container isKindOfClass:[GMUPlacemark class]]) {
+            GMUPlacemark *placemark = container;
+            style = [_styles objectForKey:placemark.styleUrl];
+            // If not found, look it up in one of the StyleMaps
+            style = style ?: [self getStyleFromStyleMaps:placemark.styleUrl];
+        }
+        [self renderGeometryContainer:container style:style];
     }
-    [self renderGeometryContainer:container style:style];
-  }
 }
 
 - (void)renderGeometryContainer:(id<GMUGeometryContainer>)container style:(GMUStyle *)style {
-  id<GMUGeometry> geometry = container.geometry;
-  if ([geometry isKindOfClass:[GMUGeometryCollection class]]) {
-    [self renderMultiGeometry:geometry container:container style:style];
-  } else {
-    [self renderGeometry:geometry container:container style:style];
-  }
+    id<GMUGeometry> geometry = container.geometry;
+    if ([geometry isKindOfClass:[GMUGeometryCollection class]]) {
+        [self renderMultiGeometry:geometry container:container style:style];
+    } else {
+        [self renderGeometry:geometry container:container style:style];
+    }
 }
 
 - (void)renderGeometry:(id<GMUGeometry>)geometry
              container:(id<GMUGeometryContainer>)container
                  style:(GMUStyle *)style {
-  if ([geometry isKindOfClass:[GMUPoint class]]) {
-    [self renderPoint:geometry container:container style:style];
-  } else if ([geometry isKindOfClass:[GMULineString class]]) {
-    [self renderLineString:geometry container:container style:style];
-  } else if ([geometry isKindOfClass:[GMUPolygon class]]) {
-    [self renderPolygon:geometry container:container style:style];
-  } else if ([geometry isKindOfClass:[GMUGroundOverlay class]]) {
-    [self renderGroundOverlay:geometry placemark:container style:style];
-  }
+    if ([geometry isKindOfClass:[GMUPoint class]]) {
+        [self renderPoint:geometry container:container style:style];
+    } else if ([geometry isKindOfClass:[GMULineString class]]) {
+        [self renderLineString:geometry container:container style:style];
+    } else if ([geometry isKindOfClass:[GMUPolygon class]]) {
+        [self renderPolygon:geometry container:container style:style];
+    } else if ([geometry isKindOfClass:[GMUGroundOverlay class]]) {
+        [self renderGroundOverlay:geometry placemark:container style:style];
+    }
 }
 
 - (void)renderPoint:(GMUPoint *)point
           container:(id<GMUGeometryContainer>)container
               style:(GMUStyle *)style {
-  CLLocationCoordinate2D coordinate = point.coordinate;
-  GMSMarker *marker = [GMSMarker markerWithPosition:coordinate];
+    CLLocationCoordinate2D coordinate = point.coordinate;
+    GMSMarker *marker = [GMSMarker markerWithPosition:coordinate];
   marker.tappable = true;
-  if ([container isKindOfClass:[GMUPlacemark class]]) {
-    GMUPlacemark *placemark = container;
-    marker.title = style.title ?: placemark.title;
-    marker.snippet = placemark.snippet;
-  } else {
-    marker.title = style.title;
-  }
-  if (style.anchor.x && style.anchor.y) {
-    marker.groundAnchor = style.anchor;
-  }
-  if (style.heading) {
-    marker.rotation = style.heading;
-  }
-  if (style.iconUrl) {
-    __weak GMSMarker *weakMarker = marker;
-    __weak GMSMapView *weakMap = _map;
-    dispatch_async(_queue, ^{
-      UIImage *image = [[self class] imageFromPath:style.iconUrl];
-      image = [UIImage imageWithCGImage:image.CGImage
-                                  scale:(image.scale * style.scale)
-                            orientation:image.imageOrientation];
-      dispatch_async(dispatch_get_main_queue(), ^{
-        GMSMarker *strongMarker = weakMarker;
-        GMSMapView *strongMap = weakMap;
-        strongMarker.icon = image;
-        if (!self->_isMapCleared) {
-          strongMarker.map = strongMap;
-        }
-      });
-    });
-  } else {
-    marker.map = _map;
-  }
-  [_mapOverlays addObject:marker];
+    if ([container isKindOfClass:[GMUPlacemark class]]) {
+        GMUPlacemark *placemark = container;
+        marker.title = style.title ?: placemark.title;
+        marker.snippet = placemark.snippet;
+    } else {
+        marker.title = style.title;
+    }
+    if (style.anchor.x && style.anchor.y) {
+        marker.groundAnchor = style.anchor;
+    }
+    if (style.heading) {
+        marker.rotation = style.heading;
+    }
+    if (style.iconUrl) {
+        __weak GMSMarker *weakMarker = marker;
+        __weak GMSMapView *weakMap = _map;
+        dispatch_async(_queue, ^{
+            UIImage *image = [[self class] imageFromPath:style.iconUrl];
+            image = [UIImage imageWithCGImage:image.CGImage
+                                        scale:(image.scale * style.scale)
+                                  orientation:image.imageOrientation];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                GMSMarker *strongMarker = weakMarker;
+                GMSMapView *strongMap = weakMap;
+                strongMarker.icon = image;
+                if (!self->_isMapCleared) {
+                    strongMarker.map = strongMap;
+                }
+            });
+        });
+    } else {
+        marker.map = _map;
+    }
+    [_mapOverlays addObject:marker];
 }
 
 - (void)renderLineString:(GMULineString *)lineString
                container:(id<GMUGeometryContainer>)container
                    style:(GMUStyle *)style {
-  GMSPolyline *line = [GMSPolyline polylineWithPath:lineString.path];
-  if (style.width) {
-    line.strokeWidth = style.width;
-  }
-  if (style.strokeColor) {
-    line.strokeColor = style.strokeColor;
-  }
-  if ([container isKindOfClass:[GMUPlacemark class]]) {
-    GMUPlacemark *placemark = container;
-    line.title = placemark.title;
-  }
+    GMSPolyline *line = [GMSPolyline polylineWithPath:lineString.path];
+    if (style.width) {
+        line.strokeWidth = style.width;
+    }
+    if (style.strokeColor) {
+        line.strokeColor = style.strokeColor;
+    }
+    if ([container isKindOfClass:[GMUPlacemark class]]) {
+        GMUPlacemark *placemark = container;
+        line.title = placemark.title;
+    }
   line.tappable = true;
-  line.map = _map;
-  [_mapOverlays addObject:line];
+    line.map = _map;
+    [_mapOverlays addObject:line];
 }
 
 - (void)renderPolygon:(GMUPolygon *)polygon
             container:(id<GMUGeometryContainer>)container
                 style:(GMUStyle *)style {
-  GMSPath *outerBoundaries = polygon.paths.firstObject;
-  NSArray *innerBoundaries = [[NSArray alloc] init];
-  if (polygon.paths.count > 1) {
-    innerBoundaries = [polygon.paths subarrayWithRange:NSMakeRange(1, polygon.paths.count - 1)];
-  }
-  NSMutableArray<GMSPath *> *holes = [[NSMutableArray alloc] init];
-  for (GMSPath *hole in innerBoundaries) {
-    [holes addObject:hole];
-  }
-  GMSPolygon *poly = [GMSPolygon polygonWithPath:outerBoundaries];
-  if (style.hasFill && style.fillColor) {
-    poly.fillColor = style.fillColor;
-  }
-  if (style.hasStroke) {
-    if (style.strokeColor) {
-      poly.strokeColor = style.strokeColor;
+    GMSPath *outerBoundaries = polygon.paths.firstObject;
+    NSArray *innerBoundaries = [[NSArray alloc] init];
+    if (polygon.paths.count > 1) {
+        innerBoundaries = [polygon.paths subarrayWithRange:NSMakeRange(1, polygon.paths.count - 1)];
     }
-    if (style.width) {
-      poly.strokeWidth = style.width;
+    NSMutableArray<GMSPath *> *holes = [[NSMutableArray alloc] init];
+    for (GMSPath *hole in innerBoundaries) {
+        [holes addObject:hole];
+    }
+    GMSPolygon *poly = [GMSPolygon polygonWithPath:outerBoundaries];
+    poly.fillColor = [UIColor clearColor];
+    poly.strokeColor = [UIColor clearColor];
+    if (style.hasFill && style.fillColor) {
+        poly.fillColor = style.fillColor;
+    }
+    if (style.hasStroke) {
+        if (style.strokeColor) {
+            poly.strokeColor = style.strokeColor;
+        }
+        if (style.width) {
+            poly.strokeWidth = style.width;
+        }
+    }
+    if (holes.count) {
+        poly.holes = holes;
+    }
+    if ([container isKindOfClass:[GMUPlacemark class]]) {
+        GMUPlacemark *placemark = container;
+        poly.title = placemark.title;
     }
   }
   if (holes.count) {
@@ -275,57 +285,57 @@ static NSString *const kStyleMapDefaultState = @"normal";
     poly.title = placemark.title;
   }
   poly.tappable = true;
-  poly.map = _map;
-  [_mapOverlays addObject:poly];
+    poly.map = _map;
+    [_mapOverlays addObject:poly];
 }
 
 - (void)renderGroundOverlay:(GMUGroundOverlay *)overlay
                   placemark:(GMUPlacemark *)placemark
                       style:(GMUStyle *)style {
-  CLLocationCoordinate2D northEast = overlay.northEast;
-  CLLocationCoordinate2D southWest = overlay.southWest;
-  CLLocationDegrees centerLatitude = (northEast.latitude + southWest.latitude) / 2.0;
-  CLLocationDegrees centerLongitude = (northEast.longitude + southWest.longitude) / 2.0;
-  if (northEast.longitude < southWest.longitude) {
-    if (centerLongitude >= 0) {
-      centerLongitude -= 180;
-    } else {
-      centerLongitude += 180;
+    CLLocationCoordinate2D northEast = overlay.northEast;
+    CLLocationCoordinate2D southWest = overlay.southWest;
+    CLLocationDegrees centerLatitude = (northEast.latitude + southWest.latitude) / 2.0;
+    CLLocationDegrees centerLongitude = (northEast.longitude + southWest.longitude) / 2.0;
+    if (northEast.longitude < southWest.longitude) {
+        if (centerLongitude >= 0) {
+            centerLongitude -= 180;
+        } else {
+            centerLongitude += 180;
+        }
     }
-  }
-  CLLocationCoordinate2D center = CLLocationCoordinate2DMake(centerLatitude, centerLongitude);
-  GMSCoordinateBounds *northEastBounds = [[GMSCoordinateBounds alloc] initWithCoordinate:northEast
-                                                                              coordinate:center];
-  GMSCoordinateBounds *southWestBounds = [[GMSCoordinateBounds alloc] initWithCoordinate:southWest
-                                                                              coordinate:center];
-  GMSCoordinateBounds *bounds = [northEastBounds includingBounds:southWestBounds];
-  GMSGroundOverlay *groundOverlay = [GMSGroundOverlay groundOverlayWithBounds:bounds icon:nil];
+    CLLocationCoordinate2D center = CLLocationCoordinate2DMake(centerLatitude, centerLongitude);
+    GMSCoordinateBounds *northEastBounds = [[GMSCoordinateBounds alloc] initWithCoordinate:northEast
+                                                                                coordinate:center];
+    GMSCoordinateBounds *southWestBounds = [[GMSCoordinateBounds alloc] initWithCoordinate:southWest
+                                                                                coordinate:center];
+    GMSCoordinateBounds *bounds = [northEastBounds includingBounds:southWestBounds];
+    GMSGroundOverlay *groundOverlay = [GMSGroundOverlay groundOverlayWithBounds:bounds icon:nil];
   groundOverlay.tappable = true;
-  groundOverlay.zIndex = overlay.zIndex;
-  groundOverlay.bearing = overlay.rotation;
-  __weak GMSGroundOverlay *weakGroundOverlay = groundOverlay;
-  __weak GMSMapView *weakMap = _map;
-  dispatch_async(_queue, ^{
-    UIImage *image = [[self class] imageFromPath:overlay.href];
-    dispatch_async(dispatch_get_main_queue(), ^{
-      GMSGroundOverlay *strongGroundOverlay = weakGroundOverlay;
-      GMSMapView *strongMap = weakMap;
-      strongGroundOverlay.icon = image;
-      if (!self->_isMapCleared) {
-        strongGroundOverlay.map = strongMap;
-      }
+    groundOverlay.zIndex = overlay.zIndex;
+    groundOverlay.bearing = overlay.rotation;
+    __weak GMSGroundOverlay *weakGroundOverlay = groundOverlay;
+    __weak GMSMapView *weakMap = _map;
+    dispatch_async(_queue, ^{
+        UIImage *image = [[self class] imageFromPath:overlay.href];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            GMSGroundOverlay *strongGroundOverlay = weakGroundOverlay;
+            GMSMapView *strongMap = weakMap;
+            strongGroundOverlay.icon = image;
+            if (!self->_isMapCleared) {
+                strongGroundOverlay.map = strongMap;
+            }
+        });
     });
-  });
-  [_mapOverlays addObject:groundOverlay];
+    [_mapOverlays addObject:groundOverlay];
 }
 
 - (void)renderMultiGeometry:(id<GMUGeometry>)geometry
                   container:(id<GMUGeometryContainer>)container
                       style:(GMUStyle *)style {
-  GMUGeometryCollection *multiGeometry = geometry;
-  for (id<GMUGeometry> singleGeometry in multiGeometry.geometries) {
-    [self renderGeometry:singleGeometry container:container style:style];
-  }
+    GMUGeometryCollection *multiGeometry = geometry;
+    for (id<GMUGeometry> singleGeometry in multiGeometry.geometries) {
+        [self renderGeometry:singleGeometry container:container style:style];
+    }
 }
 
 @end

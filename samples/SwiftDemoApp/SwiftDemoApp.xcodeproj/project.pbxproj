@@ -149,8 +149,9 @@
 				TargetAttributes = {
 					02B36ACD1D190D7E00EA3A86 = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = VE438994G6;
 						LastSwiftMigration = 0810;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -356,13 +357,13 @@
 			baseConfigurationReference = 02B36AE91D1B922800EA3A86 /* Pods-SwiftDemoApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = VE438994G6;
 				INFOPLIST_FILE = SwiftDemoApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.google.gmsutils.DemoApp;
+				PRODUCT_BUNDLE_IDENTIFIER = co.xx.DemoApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SwiftDemoApp/SwiftDemoApp-Bridging-Header.h";
@@ -375,13 +376,13 @@
 			baseConfigurationReference = 02B36AEA1D1B922800EA3A86 /* Pods-SwiftDemoApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = VE438994G6;
 				INFOPLIST_FILE = SwiftDemoApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.google.gmsutils.DemoApp;
+				PRODUCT_BUNDLE_IDENTIFIER = co.xx.DemoApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SwiftDemoApp/SwiftDemoApp-Bridging-Header.h";
