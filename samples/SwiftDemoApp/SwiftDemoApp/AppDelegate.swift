@@ -17,7 +17,7 @@ import GoogleMaps
 import UIKit
 
 // Change this key to a valid key registered with the demo app bundle id.
-let mapsAPIKey = "AIzaSyBG1nvcnNgfR3eEVduXjEHQ3eGs4quNqds"
+let mapsAPIKey = ""
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
