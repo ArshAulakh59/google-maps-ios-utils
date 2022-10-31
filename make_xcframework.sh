@@ -52,7 +52,8 @@ function cleanup() {
   rm -r *.xcarchive
 }
 
-carthage update --platform iOS --use-xcframeworks
+# Uncomment this when running for the first time (or to update to latest versions of dependency xcframeworks) and drop these frameworks to project from Carthage/iOS (plus GoogleMaps.bundle from GoogleMaps.framework/Resources) with 'Copy items' option unchecked.
+# carthage update --platform iOS --use-xcframeworks
 
 # Create Build directory if not existing.
 if [ ! -d "$BUILD_DIRECTORY" ]; then
