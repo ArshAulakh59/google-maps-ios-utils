@@ -52,6 +52,8 @@ function cleanup() {
   rm -r *.xcarchive
 }
 
+carthage update --platform iOS --use-xcframeworks
+
 # Create Build directory if not existing.
 if [ ! -d "$BUILD_DIRECTORY" ]; then
   mkdir $BUILD_DIRECTORY

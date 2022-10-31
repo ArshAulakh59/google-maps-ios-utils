@@ -27,42 +27,42 @@
 static NSString *const kStyleMapDefaultState = @"normal";
 
 @implementation GMUGeometryRenderer {
-  NSMutableArray<GMSOverlay *> *_mapOverlays;
-
-  /**
-   * The Google Map to render the placemarks onto.
-   */
-  __weak GMSMapView *_map;
-
-  /**
-   * The list of parsed geometries to render onto the map.
-   */
-  NSArray<id<GMUGeometryContainer>> *_geometryContainers;
-
-  /**
-   * The list of parsed styles to be applied to the placemarks.
-   */
-  NSDictionary<NSString *, GMUStyle *> *_styles;
-
-  /**
-   * The list of parsed style maps to be applied to the placemarks.
-   */
-  NSDictionary<NSString *, GMUStyleMap *> *_styleMaps;
-
-  /**
-   * The dispatch queue used to download images for ground overlays and point icons.
-   */
-  dispatch_queue_t _queue;
-
-  /**
-   * Whether the map has been marked as cleared.
-   */
-  BOOL _isMapCleared;
+    NSMutableArray<GMSOverlay *> *_mapOverlays;
+    
+    /**
+     * The Google Map to render the placemarks onto.
+     */
+    __weak GMSMapView *_map;
+    
+    /**
+     * The list of parsed geometries to render onto the map.
+     */
+    NSArray<id<GMUGeometryContainer>> *_geometryContainers;
+    
+    /**
+     * The list of parsed styles to be applied to the placemarks.
+     */
+    NSDictionary<NSString *, GMUStyle *> *_styles;
+    
+    /**
+     * The list of parsed style maps to be applied to the placemarks.
+     */
+    NSDictionary<NSString *, GMUStyleMap *> *_styleMaps;
+    
+    /**
+     * The dispatch queue used to download images for ground overlays and point icons.
+     */
+    dispatch_queue_t _queue;
+    
+    /**
+     * Whether the map has been marked as cleared.
+     */
+    BOOL _isMapCleared;
 }
 
 - (instancetype)initWithMap:(GMSMapView *)map
                  geometries:(NSArray<id<GMUGeometryContainer>> *)geometries {
-  return [self initWithMap:map geometries:geometries styles:nil];
+    return [self initWithMap:map geometries:geometries styles:nil];
 }
 
 - (instancetype)initWithMap:(GMSMapView *)map
@@ -75,40 +75,40 @@ static NSString *const kStyleMapDefaultState = @"normal";
                  geometries:(NSArray<id<GMUGeometryContainer>> *)geometries
                      styles:(NSArray<GMUStyle *> *)styles
                   styleMaps:(NSArray<GMUStyleMap *> *)styleMaps {
-  if (self = [super init]) {
-    _map = map;
-    _geometryContainers = geometries;
-    _styles = [[self class] stylesDictionaryFromArray:styles];
-    _styleMaps = [[self class] styleMapsDictionaryFromArray: styleMaps];
-    _mapOverlays = [[NSMutableArray alloc] init];
-    _queue = dispatch_queue_create("com.google.gmsutils", DISPATCH_QUEUE_CONCURRENT);
-  }
-  return self;
+    if (self = [super init]) {
+        _map = map;
+        _geometryContainers = geometries;
+        _styles = [[self class] stylesDictionaryFromArray:styles];
+        _styleMaps = [[self class] styleMapsDictionaryFromArray: styleMaps];
+        _mapOverlays = [[NSMutableArray alloc] init];
+        _queue = dispatch_queue_create("com.google.gmsutils", DISPATCH_QUEUE_CONCURRENT);
+    }
+    return self;
 }
 
 - (void)render {
-  _isMapCleared = NO;
-  [self renderGeometryContainers:_geometryContainers];
+    _isMapCleared = NO;
+    [self renderGeometryContainers:_geometryContainers];
 }
 
 - (void)clear {
-  _isMapCleared = YES;
-  for (GMSOverlay *overlay in _mapOverlays) {
-    overlay.map = nil;
-  }
-  [_mapOverlays removeAllObjects];
+    _isMapCleared = YES;
+    for (GMSOverlay *overlay in _mapOverlays) {
+        overlay.map = nil;
+    }
+    [_mapOverlays removeAllObjects];
 }
 
 - (NSArray<GMSOverlay *> *)mapOverlays {
-  return _mapOverlays;
+    return _mapOverlays;
 }
 
 + (NSDictionary<NSString *, GMUStyle *> *)stylesDictionaryFromArray:(NSArray<GMUStyle *> *)styles {
-  NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:styles.count];
-  for (GMUStyle *style in styles) {
-    [dict setObject:style forKey:style.styleID];
-  }
-  return dict;
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:styles.count];
+    for (GMUStyle *style in styles) {
+        [dict setObject:style forKey:style.styleID];
+    }
+    return dict;
 }
 
 + (NSDictionary<NSString *, GMUStyleMap *> *)styleMapsDictionaryFromArray:(NSArray<GMUStyleMap *> *)styleMaps {
@@ -187,7 +187,7 @@ static NSString *const kStyleMapDefaultState = @"normal";
               style:(GMUStyle *)style {
     CLLocationCoordinate2D coordinate = point.coordinate;
     GMSMarker *marker = [GMSMarker markerWithPosition:coordinate];
-  marker.tappable = true;
+    marker.tappable = true;
     if ([container isKindOfClass:[GMUPlacemark class]]) {
         GMUPlacemark *placemark = container;
         marker.title = style.title ?: placemark.title;
@@ -238,7 +238,7 @@ static NSString *const kStyleMapDefaultState = @"normal";
         GMUPlacemark *placemark = container;
         line.title = placemark.title;
     }
-  line.tappable = true;
+    line.tappable = true;
     line.map = _map;
     [_mapOverlays addObject:line];
 }
@@ -276,15 +276,14 @@ static NSString *const kStyleMapDefaultState = @"normal";
         GMUPlacemark *placemark = container;
         poly.title = placemark.title;
     }
-  }
-  if (holes.count) {
-    poly.holes = holes;
-  }
-  if ([container isKindOfClass:[GMUPlacemark class]]) {
-    GMUPlacemark *placemark = container;
-    poly.title = placemark.title;
-  }
-  poly.tappable = true;
+    if (holes.count) {
+        poly.holes = holes;
+    }
+    if ([container isKindOfClass:[GMUPlacemark class]]) {
+        GMUPlacemark *placemark = container;
+        poly.title = placemark.title;
+    }
+    poly.tappable = true;
     poly.map = _map;
     [_mapOverlays addObject:poly];
 }
@@ -310,7 +309,7 @@ static NSString *const kStyleMapDefaultState = @"normal";
                                                                                 coordinate:center];
     GMSCoordinateBounds *bounds = [northEastBounds includingBounds:southWestBounds];
     GMSGroundOverlay *groundOverlay = [GMSGroundOverlay groundOverlayWithBounds:bounds icon:nil];
-  groundOverlay.tappable = true;
+    groundOverlay.tappable = true;
     groundOverlay.zIndex = overlay.zIndex;
     groundOverlay.bearing = overlay.rotation;
     __weak GMSGroundOverlay *weakGroundOverlay = groundOverlay;

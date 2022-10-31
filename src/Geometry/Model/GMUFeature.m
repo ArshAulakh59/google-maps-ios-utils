@@ -22,6 +22,17 @@
 
 - (instancetype)initWithGeometry:(id<GMUGeometry>)geometry
                       identifier:(NSString * _Nullable)identifier
+                      properties:(NSDictionary<NSString *, NSObject *> * _Nullable)properties {
+    if (self = [super init]) {
+        _geometry = geometry;
+        _identifier = identifier;
+        _properties = properties ?: [[[NSDictionary alloc] init] copy];
+    }
+    return self;
+}
+
+- (instancetype)initWithGeometry:(id<GMUGeometry>)geometry
+                      identifier:(NSString * _Nullable)identifier
                       properties:(NSDictionary<NSString *, NSObject *> * _Nullable)properties
                      boundingBox:(GMSCoordinateBounds * _Nullable)boundingBox {
   if (self = [super init]) {
