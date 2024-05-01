@@ -24,7 +24,7 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "GoogleMapsUtils",
-            url: "https://github.com/ArshAulakh59/google-maps-ios-utils/releases/download/v4.2.3/GoogleMapsUtils.xcframework.zip",
+            url: "https://github.com/ArshAulakh59/google-maps-ios-utils/releases/download/v4.2.4/GoogleMapsUtils.xcframework.zip",
             checksum: "59445ddaf473d0c7a647fb009396961ca647026fa83ef2cf5d9e05e215bd9335"
         )
     ]
