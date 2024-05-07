@@ -154,9 +154,9 @@ static NSString *const kStyleMapDefaultState = @"normal";
       style = [_styles objectForKey:placemark.styleUrl];
       // If not found, look it up in one of the StyleMaps
       style = style ?: [self getStyleFromStyleMaps:placemark.styleUrl];
+        }
+        [self renderGeometryContainer:container style:style];
     }
-    [self renderGeometryContainer:container style:style];
-  }
 }
 
 - (void)renderGeometryContainer:(id<GMUGeometryContainer>)container style:(GMUStyle *)style {
@@ -256,23 +256,25 @@ static NSString *const kStyleMapDefaultState = @"normal";
     [holes addObject:hole];
   }
   GMSPolygon *poly = [GMSPolygon polygonWithPath:outerBoundaries];
+  poly.fillColor = [UIColor clearColor];
+  poly.strokeColor = [UIColor clearColor];
   if (style.hasFill && style.fillColor) {
     poly.fillColor = style.fillColor;
   }
   if (style.hasStroke) {
     if (style.strokeColor) {
       poly.strokeColor = style.strokeColor;
+        }
+        if (style.width) {
+            poly.strokeWidth = style.width;
+        }
     }
-    if (style.width) {
-      poly.strokeWidth = style.width;
+    if (holes.count) {
+        poly.holes = holes;
     }
-  }
-  if (holes.count) {
-    poly.holes = holes;
-  }
-  if ([container isKindOfClass:[GMUPlacemark class]]) {
-    GMUPlacemark *placemark = container;
-    poly.title = placemark.title;
+    if ([container isKindOfClass:[GMUPlacemark class]]) {
+        GMUPlacemark *placemark = container;
+        poly.title = placemark.title;
   }
   poly.tappable = true;
   poly.map = _map;
